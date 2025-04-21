@@ -1,11 +1,15 @@
 "use client";
 
+import PrivyButton from "@/components/custom/PrivyButton";
+
 export default function LandingPage() {
   return (
     <main>
       {/* Header */}
       {/* Hero Section */}
-      <section></section>
+      <section>
+        <PrivyButton />
+      </section>
 
       { /* What is Nitro? */}
       <section></section>
