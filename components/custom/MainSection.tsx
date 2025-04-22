@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import PoolPage from "@/components/custom/PoolPage";
 
 interface MainSectionProps {
   role: string;
@@ -19,7 +20,7 @@ export default function MainSection({ role, selectedTab }: MainSectionProps) {
       case "dashboard":
         return <div>Dashboard content here</div>;
       case "pools":
-        return <div>Pools content here</div>;
+        return <PoolPage />;
       case "profile":
         return <div>Profile content here</div>;
       case "governance":
@@ -30,7 +31,7 @@ export default function MainSection({ role, selectedTab }: MainSectionProps) {
   };
 
   return (
-    <section className="p-8">
+    <section className="p-6">
       {renderContent()}
     </section>
   );
