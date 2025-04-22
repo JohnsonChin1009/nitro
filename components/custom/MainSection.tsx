@@ -13,6 +13,7 @@ interface MainSectionProps {
 export default function MainSection({ role, selectedTab }: MainSectionProps) {
   const [currentTab, setCurrentTab] = useState(selectedTab);
   console.log("role selected", role);
+  
   useEffect(() => {
     setCurrentTab(selectedTab);
   }, [selectedTab]);
