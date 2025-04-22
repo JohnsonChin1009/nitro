@@ -50,37 +50,31 @@ export default function PrivyButton() {
     return <p>Loading...</p>;
   }
 
-  return (
-    <div className="w-full flex items-center gap-4">
-      {!authenticated ? (
-        <button
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          onClick={login}
-        >
-          Connect Wallet
-        </button>
-      ) : (
-        <div className="relative" ref={dropdownRef}>
-          <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="w-full border-2 border-gray-300 hover:border-[#2c2c2c] px-4 py-2 text-[13px] flex items-center justify-center gap-2 rounded-xl duration-200"
-          >
-            <div className="w-2 h-2 rounded-full bg-green-500"></div>
-            {user?.wallet?.address.slice(0, 6)}...{user?.wallet?.address.slice(-4)}
-          </button>
-
-          {dropdownOpen && (
-            <div className="absolute bottom-full mb-2 left-0 w-full bg-white border border-gray-300 rounded-xl shadow-lg z-50 hover:-translate-y-1 duration-300 hover:border-[#2c2c2c]">
-              <button
-                onClick={handleLogout}
-                className="block w-full px-3 py-2 text-center hover:font-semibold"
-              >
-                Disconnect
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+  return authenticated ? (
+    <div className="relative inline-block w-full" ref={dropdownRef}>
+      <button onClick={() => setDropdownOpen(!dropdownOpen)} className="w-full border-2 border-gray-300 hover:border-2 px-4 py-2 text-[13px] flex items-center justify-center gap-2 rounded-xl hover:border-[#2C2C2C] duration-200">
+        {/* Green Dot */}
+        <div className="w-2 h-2 rounded-full bg-green-500"></div>
+        {user?.wallet?.address
+        ? `${user.wallet.address.slice(0, 6)}...${user.wallet.address.slice(
+            -4
+          )}`
+        : "Menu"}      
+      </button>
+      {dropdownOpen && (
+          <div className="absolute bottom-full mb-2 left-0 w-full bg-white border border-gray-300 rounded-xl shadow-lg z-50 hover:-translate-y-1 duration-300 hover:border-[#2c2c2c]">
+            <button
+              onClick={handleLogout}
+              className="block w-full px-3 py-2 text-center hover:font-semibold"
+            >
+              Disconnect
+            </button>
+          </div>
+        )}
     </div>
+  ) : (
+    <button onClick={login}>
+      Connect Wallet
+    </button>
   );
 }

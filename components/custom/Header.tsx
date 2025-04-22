@@ -30,7 +30,7 @@ export default function Header({role, selectedTab, sidebarOpen, toggleSidebar}: 
                     <PanelRightClose />
                 </Button>
                 )}
-                <h1 className="text-xl font-bold">{currentTab}</h1>
+                <h1 className="text-xl font-black">{currentTab}</h1>
             </div>
             <div className="flex items-center gap-3">
                 {rightArea}
