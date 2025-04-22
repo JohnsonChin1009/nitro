@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const CallToAction = () => {
   return (
-    <section className="bg-gradient-to-b from-white to-[#a8aec8]  overflow-x-clip fixed-container mt-16 ">
+    <section className="bg-gradient-to-b from-white to-[#a8aec8]  overflow-x-clip fixed-container mt-5 ">
       <div className="backdrop-blur-md  bg-opacity-20  border border-white  border-opacity-20 shadow-lg bg-gradient-to-b from-white to-[#a8aec8]  py-16 min-h-[400px]">
         <div className="relative max-w-[540px] mx-auto">
           <h2 className="section-title mb-7"> Ready to Make Your Money Work Smarter??</h2>

@@ -23,9 +23,27 @@ const FeatureSection = () => {
       description:
         "Gain valuable insights with comprehensive data visualization tools.",
     },
+    {
+        icon: <Zap className="h-6 w-6" />,
+        title: "Lightning Fast",
+        description:
+          "Our optimized platform delivers exceptional performance with minimal latency.",
+      },
+      {
+        icon: <Shield className="h-6 w-6" />,
+        title: "Enterprise Security",
+        description:
+          "Bank-level security with end-to-end encryption and advanced threat protection.",
+      },
+      {
+        icon: <BarChart className="h-6 w-6" />,
+        title: "Detailed Analytics",
+        description:
+          "Gain valuable insights with comprehensive data visualization tools.",
+      },
   ];
   return (
-    <section className="bg-white min-h-[850px] bg-gradient-to-b from-[#d3dbf9] to-[#FFFFFF] py-24 overflow-x-clip">
+    <section className="bg-white min-h-[880px] bg-gradient-to-b from-[#d3dbf9] to-[#FFFFFF] py-18 overflow-x-clip">
       <div className="px-5 py-2 flex flex-col">
         <div className="max-w-[850px] mx-auto my-6">
           <div className="flex flex-col justify-between items-center">
