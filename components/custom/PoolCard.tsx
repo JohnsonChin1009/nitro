@@ -4,7 +4,7 @@ export default function PoolCard() {
   return (
     <div className="bg-card border border-gray-200 shadow-sm rounded-2xl p-6 w-full max-w-sm hover:shadow-md transition-shadow duration-200">
       <div className="flex flex-col gap-3">
-        <h2 className="text-lg font-semibold text-gray-800">📦 Nitro Growth Pool</h2>
+        <h2 className="text-lg font-semibold text-gray-800">Nitro Growth Pool</h2>
         <p className="text-sm text-gray-600">
           A stable pool optimized for microloan disbursement in Malaysia.
         </p>

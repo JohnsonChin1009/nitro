@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import PoolPage from "@/components/custom/PoolPage";
+import DashboardSection from "@/components/custom/DashboardSection";
+import PoolSection from "@/components/custom/PoolSection";
+import ProfileSection from "@/components/custom/ProfileSection";
 
 interface MainSectionProps {
   role: string;
@@ -18,11 +20,11 @@ export default function MainSection({ role, selectedTab }: MainSectionProps) {
   const renderContent = () => {
     switch (currentTab) {
       case "dashboard":
-        return <div>Dashboard content here</div>;
+        return <DashboardSection />;
       case "pools":
-        return <PoolPage />;
+        return <PoolSection />;
       case "profile":
-        return <div>Profile content here</div>;
+        return <ProfileSection />;
       case "governance":
         return <div>Governance content here</div>;
       default:
