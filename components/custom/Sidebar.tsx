@@ -32,7 +32,7 @@ export default function Sidebar({role, isOpen, setIsOpen, selectedTab, setSelect
     const borrowerTabs = [
         { key: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
         { key: "pools", icon: WavesLadder, label: "Pools" },
-        { key: "proile", icon: UserRound, label: "Profile"},
+        { key: "profile", icon: UserRound, label: "Profile"},
         { key: "governance", icon: Landmark, label: "Governance" }
     ]
 

@@ -1,6 +1,7 @@
 "use client"
 
-import Sidebar from "@/components/custom/Sidebar"
+import Sidebar from "@/components/custom/Sidebar";
+import Header from "@/components/custom/Header";
 import { useState, useEffect } from "react";
 
 export default function DashboardPage() {
@@ -30,8 +31,16 @@ export default function DashboardPage() {
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
         />
-
-        This is the dashboard page
+        <div className="flex flex-col flex-1">
+          <Header
+            selectedTab={selectedTab}
+            sidebarOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+          />
+          <div>
+            This is the section
+          </div>
+        </div>
       </main>
     </>
   )
