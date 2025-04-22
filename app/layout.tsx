@@ -17,6 +17,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Nitro",
   description: "An AI Integrated Web3 Micrloan Platform Built for Borrowers and Lenders ",
+  icons: "/logo.svg"
 };
 
 export default function RootLayout({
