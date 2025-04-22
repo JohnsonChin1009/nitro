@@ -1,21 +1,24 @@
 "use client"
 
-import { useState, useEffect } from "react";
-import { PanelRightClose } from "lucide-react";
+import { PanelRightClose, BadgePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 interface HeaderProps {
+    role: string;
     selectedTab: string;
     sidebarOpen?: boolean;
     toggleSidebar?: () => void;
 }
 
-export default function Header({selectedTab, sidebarOpen, toggleSidebar}: HeaderProps) {
+export default function Header({role, selectedTab, sidebarOpen, toggleSidebar}: HeaderProps) {
     const [currentTab, setCurrentTab] = useState(selectedTab);
 
     useEffect(() => {
-        setCurrentTab(selectedTab.toUpperCase());
+      setCurrentTab(selectedTab.toUpperCase());
     }, [selectedTab]);
+
+    const rightArea = role === "staker" ? <StakerRightArea /> : <BorrowerRightArea />;
 
     return (
         <header className="sticky border-b bg-background w-full">
@@ -29,7 +32,29 @@ export default function Header({selectedTab, sidebarOpen, toggleSidebar}: Header
                 )}
                 <h1 className="text-xl font-bold">{currentTab}</h1>
             </div>
+            <div className="flex items-center gap-3">
+                {rightArea}
+            </div>
             </div>
         </header>
+    )
+}
+
+const StakerRightArea = () => {
+    return (
+        <>
+            <Button className="font-bold">
+                Stake
+                <BadgePlus className="w-8 h-8" />
+            </Button>
+        </>
+    )
+}
+
+const BorrowerRightArea = () => {
+    return (
+        <div>
+
+        </div>
     )
 }

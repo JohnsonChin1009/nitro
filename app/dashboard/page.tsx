@@ -33,6 +33,7 @@ export default function DashboardPage() {
         />
         <div className="flex flex-col flex-1">
           <Header
+            role={role}
             selectedTab={selectedTab}
             sidebarOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
