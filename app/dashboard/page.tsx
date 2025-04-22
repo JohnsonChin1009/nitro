@@ -2,6 +2,7 @@
 
 import Sidebar from "@/components/custom/Sidebar";
 import Header from "@/components/custom/Header";
+import MainSection from "@/components/custom/MainSection";
 import { useState, useEffect } from "react";
 
 export default function DashboardPage() {
@@ -38,9 +39,7 @@ export default function DashboardPage() {
             sidebarOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
           />
-          <div>
-            This is the section
-          </div>
+          <MainSection role={role} selectedTab={selectedTab} />
         </div>
       </main>
     </>
