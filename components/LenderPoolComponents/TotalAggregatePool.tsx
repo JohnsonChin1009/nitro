@@ -1,16 +1,9 @@
-"use client";
-import AggregatePool from "@/components/LenderPoolComponents/TotalAggregatePool";
-import { useState } from "react";
-import {
-  BadgePercent,
-  BookOpen,
-  Briefcase,
-  Home,
-  ShoppingBag,
-  Sparkles,
-} from "lucide-react";
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { useState } from "react"
+import { DollarSign, Plus, Sparkles, BadgePercent } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -18,17 +11,25 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import MicroLoanPoolCard from "@/components/LenderPoolComponents/MicroLoanPoolCard";
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Progress } from "@/components/ui/progress"
 
+interface AggregatePoolProps {
+  totalAmount: number
+  targetAmount: number
+  onContribute?: (amount: number) => void
+}
 
-const Dashboard = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPool, setSelectedPool] = useState<string | null>(null);
-  const [amount, setAmount] = useState("");
-  const [step, setStep] = useState(1);
+export default function AggregatePool({
+  totalAmount = 70000,
+  targetAmount = 180000,
+  onContribute,
+}: AggregatePoolProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [amount, setAmount] = useState("")
+  const [step, setStep] = useState(1)
   const [conversionData, setConversionData] = useState({
     rm: 0,
     usdc: 0,
@@ -36,83 +37,27 @@ const Dashboard = () => {
     xp: 0,
     points: 0,
     level: 0,
-  });
+  })
 
-  // Dashboard statistics
-  const [stats, setStats] = useState({
-    totalApplications: 342,
-    totalContributors: 1289,
-    totalContributed: 70000,
-  });
-
-  // State for loan pools
-  const [loanPools, setLoanPools] = useState([
-    {
-      id: "education",
-      title: "Education Micrloan Fund Pool",
-      description: "Help students achieve their academic goals",
-      icon: BookOpen,
-      current: 15000,
-      target: 50000,
-      color: "bg-blue-500",
-      activeLoans: 28,
-      avgLoanSize: 2500,
-    },
-    {
-      id: "business",
-      title: "Business Startup Micrloan Fund Pool",
-      description: "Support entrepreneurs building new businesses",
-      icon: Briefcase,
-      current: 25000,
-      target: 40000,
-      color: "bg-green-500",
-      activeLoans: 42,
-      avgLoanSize: 5000,
-    },
-    {
-      id: "personal",
-      title: "Personal Needs Micrloan Fund Pool",
-      description: "Assist individuals with personal financial needs",
-      icon: ShoppingBag,
-      current: 10000,
-      target: 30000,
-      color: "bg-purple-500",
-      activeLoans: 35,
-      avgLoanSize: 1800,
-    },
-    {
-      id: "housing",
-      title: "Housing Improvement Micrloan Fund Pool",
-      description: "Help families improve their living conditions",
-      icon: Home,
-      current: 20000,
-      target: 60000,
-      color: "bg-orange-500",
-      activeLoans: 22,
-      avgLoanSize: 4200,
-    },
-  ]);
-
-  const handleAddFund = (poolId: string) => {
-    setSelectedPool(poolId);
-    setIsModalOpen(true);
-    setStep(1);
-    setAmount("");
-  };
+  const handleAddFund = () => {
+    setIsModalOpen(true)
+    setStep(1)
+    setAmount("")
+  }
 
   const handleAmountSubmit = () => {
-    if (!amount || isNaN(Number.parseFloat(amount))) return;
+    if (!amount || isNaN(Number.parseFloat(amount))) return
 
-    setStep(2);
+    setStep(2)
 
     // Simulate conversion calculation
     setTimeout(() => {
-      const rmAmount = Number.parseFloat(amount);
-      const usdcAmount = rmAmount * 0.21; // Example conversion rate
-      const lenderCoinAmount = usdcAmount * 1.5; // Example conversion rate
-      const xpEarned = Math.floor(lenderCoinAmount * 10);
-      const pointsEarned = Math.floor(lenderCoinAmount * 5);
-      const newLevel =  3; // Simple level calculation
+      const rmAmount = Number.parseFloat(amount)
+      const usdcAmount = rmAmount * 0.21 // Example conversion rate
+      const lenderCoinAmount = usdcAmount * 1.5 // Example conversion rate
+      const xpEarned = Math.floor(lenderCoinAmount * 10)
+      const pointsEarned = Math.floor(lenderCoinAmount * 5)
+      const newLevel = 3 // Simple level calculation
 
       setConversionData({
         rm: rmAmount,
@@ -121,127 +66,91 @@ const Dashboard = () => {
         xp: xpEarned,
         points: pointsEarned,
         level: newLevel,
-      });
+      })
 
-      setStep(3);
-    }, 1500);
-  };
+      setStep(3)
+    }, 1500)
+  }
 
   const handleConfirm = () => {
-    setStep(4);
+    setStep(4)
 
     // Simulate processing
     setTimeout(() => {
-      setStep(5); // Show rewards step
-    }, 1500);
-  };
+      setStep(5) // Show rewards step
+    }, 1500)
+  }
 
   const handleComplete = () => {
-    // Update the pool's current amount
-    if (selectedPool) {
-      const updatedPools = loanPools.map((pool) => {
-        if (pool.id === selectedPool) {
-          return {
-            ...pool,
-            current: pool.current + conversionData.rm,
-          };
-        }
-        return pool;
-      });
-
-      setLoanPools(updatedPools);
-
-      // Update total contributed
-      setStats({
-        ...stats,
-        totalContributors: stats.totalContributors + 1,
-        totalContributed: stats.totalContributed + conversionData.rm,
-      });
+    // Call the onContribute callback if provided
+    if (onContribute) {
+      onContribute(conversionData.rm)
     }
 
-    setIsModalOpen(false);
-    setStep(1);
-  };
-
-  const currentPool = selectedPool
-    ? loanPools.find((pool) => pool.id === selectedPool)
-    : null;
-
-  // Calculate total contributed across all pools
-  const totalPoolContributions = loanPools.reduce(
-    (sum, pool) => sum + pool.current,
-    0
-  );
-
-  // Calculate total target across all pools
-  const totalPoolTarget = loanPools.reduce((sum, pool) => sum + pool.target, 0)
-
-  // Handle contribution to the aggregate pool
-  const handleAggregateContribution = (amount: number) => {
-    // Distribute the contribution proportionally across all pools
-    const updatedPools = loanPools.map((pool) => {
-      const proportion = pool.target / totalPoolTarget
-      const poolContribution = amount * proportion
-
-      return {
-        ...pool,
-        current: pool.current + poolContribution,
-      }
-    })
-
-    setLoanPools(updatedPools)
+    setIsModalOpen(false)
+    setStep(1)
   }
 
-  const handleAddFund1 = (poolId: string) => {
-    // This would open the modal for individual pool contributions
-    console.log(`Add fund to pool: ${poolId}`)
-  }
+  const progressPercentage = Math.min(Math.round((totalAmount / targetAmount) * 100), 100)
+
   return (
-    <section className="py-5 min-h-screen min-w-[1100px]">
-        <div className="px-[50px] w-full flex flex-col justify-center mt-2">
-        {/*Title*/}
-        <div className="flex flex-col space-y-2 mt-3">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Microloan Dashboard
-          </h1>
-          <p className="text-muted-foreground">
-            Manage your contributions and track pool progress
-          </p>
-        </div>
-
-        {/*Main Content*/}
-        <div className="mt-5 min-w-[1200px]">
-
-           {/* Aggregate Pool Card */}
-           <div className="mb-8 mt-6">
-            <AggregatePool
-              totalAmount={totalPoolContributions}
-              targetAmount={totalPoolTarget}
-              onContribute={handleAggregateContribution}
-            />
+    <>
+      <Card className="w-full overflow-hidden">
+        <CardHeader className="pb-2 bg-gradient-to-r from-primary/10 to-primary/5">
+          <div className="flex items-start justify-between">
+            <div className="p-2 rounded-md bg-primary">
+              <DollarSign className="h-5 w-5 text-white" />
+            </div>
           </div>
-          
-      <div>
-        <h2 className="text-xl font-semibold mb-4 mt-4">Available MicroLoan Pools</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-          {loanPools.map((pool, key) => (
-            <MicroLoanPoolCard key = {key} pool={pool} handleAddFund = {handleAddFund}/>
-          ))}
-        </div>
-      </div>
+          <CardTitle className="text-2xl mt-2">Total Aggregate Microloan Pool</CardTitle>
+          <CardDescription>Combined funds across all microloan categories</CardDescription>
+        </CardHeader>
+        <CardContent className="pb-2 pt-6">
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <span className="text-3xl font-bold">RM {totalAmount.toLocaleString()}</span>
+              <span className="text-lg text-muted-foreground">Target: RM {targetAmount.toLocaleString()}</span>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Overall Progress</span>
+                <span className="font-medium">{progressPercentage}%</span>
+              </div>
+              <Progress value={progressPercentage} className="h-3" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              <div className="bg-muted/50 p-4 rounded-lg">
+                <div className="text-sm text-muted-foreground">Total Contributors</div>
+                <div className="text-2xl font-semibold mt-1">1,289</div>
+              </div>
+              <div className="bg-muted/50 p-4 rounded-lg">
+                <div className="text-sm text-muted-foreground">Active Microloans</div>
+                <div className="text-2xl font-semibold mt-1">127</div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="pt-4">
+          <Button className="w-full" size="lg" onClick={handleAddFund}>
+            <Plus className="mr-2 h-4 w-4" /> Contribute to Pool
+          </Button>
+        </CardFooter>
+      </Card>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>
-              {step === 1 && "Add Funds"}
+              {step === 1 && "Contribute to Microloan Pool"}
               {step === 2 && "Converting Currency"}
               {step === 3 && "Confirm Contribution"}
               {step === 4 && "Processing..."}
               {step === 5 && "Rewards Available!"}
             </DialogTitle>
             <DialogDescription>
-              {step === 1 && `Contributing to ${currentPool?.title}`}
+              {step === 1 && "Your contribution will be distributed across all microloan categories"}
               {step === 2 && "Please wait while we convert your currency"}
               {step === 3 && "Review your contribution details"}
               {step === 4 && "Finalizing your contribution"}
@@ -348,11 +257,7 @@ const Dashboard = () => {
             </>
           )}
         </DialogContent>
-      </Dialog>          
-        </div>   
-        </div> 
-    </section>
-  );
-};
-
-export default Dashboard;
+      </Dialog>
+    </>
+  )
+}
