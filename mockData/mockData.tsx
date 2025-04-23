@@ -1,4 +1,5 @@
 // Mock data - in a real app this would come from your Web3 connection
+import { Microloan } from "@/interfaces/Interface"
 import { Award, Wallet, TrendingUp, Users, Zap, ChevronRight, Sparkles } from "lucide-react"
 export const mockUserData = {
     name: "Johnson",
@@ -40,7 +41,7 @@ export const mockUserData = {
   }
 
 
-  export const mockMicroloans = [
+  export const mockMicroloans: Microloan[] = [
     {
       id: "1",
       applicantName: "Maria Rodriguez",

@@ -4,7 +4,7 @@ import { RecentActivity } from "@/components/LenderProfileComponent/RecentActivi
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PoolsTab from "@/components/LenderProfileComponent/PoolsTab";
 import ImpactTab from "@/components/LenderProfileComponent/ImpactTab";
-import PerksTab from "@/components/LenderProfileComponent/Perkstab";
+import PerksTab from "@/components/LenderProfileComponent/PerksTab";
 import AchievementCard from "@/components/LenderProfileComponent/AchievementCard";
 
 const Profile = () => {
