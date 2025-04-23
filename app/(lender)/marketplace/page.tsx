@@ -2,12 +2,6 @@
 
 import { useState } from "react";
 import React from "react";
-import {
-  Gift,
-  ShirtIcon as TShirt,
-  Coffee,
-  Headphones,
-} from "lucide-react";
 import { Reward } from "@/interfaces/Interface";
 import { PointsCard } from "@/components/LenderMarketPlaceComponents/PointsCard";
 import { RewardCard } from "@/components/LenderMarketPlaceComponents/RewardCards";
@@ -59,10 +53,6 @@ const MarketPlace = () => {
       
       ]
   const [userPoints, setUserPoints] = useState(1000);
-  const [selectedReward, setSelectedReward] = useState<Reward | null>(null);
-  const [redeemQuantity, setRedeemQuantity] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   return (
     <main className="px-[50px] py-5 min-h-screen">
