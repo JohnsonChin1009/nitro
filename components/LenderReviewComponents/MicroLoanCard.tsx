@@ -1,26 +1,26 @@
-"use client"
-import React, { useState } from "react"
-import axios from "axios"               
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { AlertTriangle, ThumbsUp, ThumbsDown, BarChart } from "lucide-react"
-import { formatCurrency, calculateTimeLeft } from "@/lib/utils"
-import type { Microloan } from "@/interfaces/Interface"
-import { VoteModal } from "./VoteModal"
-import { AIInsightsModal } from "./AIInsightsModal"
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { AlertTriangle, ThumbsUp, ThumbsDown, BarChart } from "lucide-react";
+import { formatCurrency, calculateTimeLeft } from "@/lib/utils";
+import type { Microloan } from "@/interfaces/Interface";
+import { VoteModal } from "./VoteModal";
+import { AIInsightsModal } from "./AIInsightsModal";
 
 interface MicroloanCardProps {
-  loan: Microloan
-  onVote: (id: string, vote: "approve" | "reject") => void
-  onGenerateInsights: (id: string, insights: string) => void
+  loan: Microloan;
+  onVote: (id: string, vote: "approve" | "reject") => void;
+  onGenerateInsights: (id: string, insights: string) => void;
 }
 
 export function MicroloanCard({
@@ -28,52 +28,70 @@ export function MicroloanCard({
   onVote,
   onGenerateInsights,
 }: MicroloanCardProps) {
-  const [showVoteModal, setShowVoteModal] = useState(false)
-  const [showInsightsModal, setShowInsightsModal] = useState(false)
-  const [isGeneratingInsights, setIsGeneratingInsights] = useState(false)
+  const [showVoteModal, setShowVoteModal] = useState(false);
+  const [showInsightsModal, setShowInsightsModal] = useState(false);
+  const [isGeneratingInsights, setIsGeneratingInsights] = useState(false);
 
   const approvalPercentage = Math.round(
     (loan.votes.approve / (loan.votes.total || 1)) * 100
-  )
-  const timeLeft = calculateTimeLeft(loan.endDate)
+  );
+  const timeLeft = calculateTimeLeft(loan.endDate);
 
   const handleGenerateInsights = async () => {
-    setIsGeneratingInsights(true)
-    setShowInsightsModal(true)
+    setIsGeneratingInsights(true);
+    setShowInsightsModal(true);
 
     try {
-     
       const payload = {
-        features: {
-          StatedMonthlyIncome:    loan.StatedMonthlyIncome,
-          DebtToIncomeRatio:      loan.DebtToIncomeRatio,
-          DelinquenciesLast7Years: loan.DelinquenciesLast7Years,
-          CreditGrade:            loan.CreditGrade,
-          ProsperRatingAlpha:     loan.ProsperRatingAlpha,
-          BorrowerState:          loan.BorrowerState,
-          Occupation:             loan.Occupation,
-          EmploymentStatus:       loan.EmploymentStatus,
-          IncomeRange:            loan.IncomeRange,
-          amount:                 loan.amount,                // if still used
-        },
-      }
+        data: [
+          loan.CreditGrade,
+          loan.ProsperRatingAlpha,
+          loan.BorrowerState,
+          loan.Occupation,
+          loan.EmploymentStatus,
+          loan.IncomeRange,
+          loan.StatedMonthlyIncome,
+          loan.DebtToIncomeRatio,
+          loan.DelinquenciesLast7Years,
+        ],
+      };
 
-      // === CALL YOUR FASTAPI ENDPOINT ===
-      const { data } = await axios.post(
-        "http://127.0.0.1:8000/predict",
-        payload
-      )
+      console.log("🚀 Sending payload to Hugging Face:", payload);
 
-      // === FEED THE RETURNED SCORE INTO YOUR UI ===
-      const score = data.predicted_score
-      onGenerateInsights(loan.id, `AI Risk Score: ${score}/10`)
-    } catch (err) {
-      console.error("AI call failed:", err)
-      onGenerateInsights(loan.id, "AI call failed")
+      // Step 1: POST to initiate prediction and get event_id
+      const postRes = await axios.post(
+        "https://saukang123-risk-model-demo.hf.space/gradio_api/call/predict",
+        payload,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      const eventId = postRes.data.event_id;
+      console.log("📬 Received event_id:", eventId);
+      if (!eventId) throw new Error("No event_id returned from Gradio POST");
+
+      // Step 2: GET to fetch the result
+      const pollRes = await axios.get(
+        `https://saukang123-risk-model-demo.hf.space/gradio_api/call/predict/${eventId}`,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      // Debug logs
+      console.log("📦 Raw poll result from Gradio:", pollRes.data);
+      console.log("📦 Type of pollRes.data:", typeof pollRes.data);
+
+      const match = pollRes.data.match(/data: (.*)/);
+      const parsed = match ? JSON.parse(match[1]) : ["Unknown"];
+      const score = parsed[0];
+
+      console.log("✅ Final Parsed Score:", score);
+      onGenerateInsights(loan.id, score);
+    } catch (err: any) {
+      console.error("❌ AI call failed:", err);
+      onGenerateInsights(loan.id, "AI call failed");
     } finally {
-      setIsGeneratingInsights(false)
+      setIsGeneratingInsights(false);
     }
-  }
+  };
 
   return (
     <>
@@ -159,8 +177,8 @@ export function MicroloanCard({
         onOpenChange={setShowVoteModal}
         loan={loan}
         onVote={(v) => {
-          onVote(loan.id, v)
-          setShowVoteModal(false)
+          onVote(loan.id, v);
+          setShowVoteModal(false);
         }}
       />
 
@@ -171,5 +189,5 @@ export function MicroloanCard({
         isGenerating={isGeneratingInsights}
       />
     </>
-  )
+  );
 }
