@@ -55,7 +55,7 @@ const MarketPlace = () => {
   const [userPoints, setUserPoints] = useState(1000);
 
   return (
-    <main className="px-[50px] py-5 min-h-screen">
+    <section className="px-[50px] py-5 min-h-screen">
       <div className="min-w-[1200px]">
         <div className="mb-5 flex flex-row justify-between items-start">
           <div >
@@ -82,7 +82,7 @@ const MarketPlace = () => {
       </div>
 
      
-    </main>
+    </section>
   );
 };
 

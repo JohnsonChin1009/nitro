@@ -83,7 +83,7 @@ const GridLineHorizontal = ({
 
           "--color-dark": "rgba(255, 255, 255, 0.2)",
           maskComposite: "exclude"
-        }
+        } as React.CSSProperties
       }
       className={cn(
         "absolute left-[calc(var(--offset)/2*-1)] h-[var(--height)] w-[calc(100%+var(--offset))]",
@@ -117,7 +117,7 @@ const GridLineVertical = ({
 
           "--color-dark": "rgba(255, 255, 255, 0.2)",
           maskComposite: "exclude"
-        }
+        } as React.CSSProperties
       }
       className={cn(
         "absolute top-[calc(var(--offset)/2*-1)] h-[calc(100%+var(--offset))] w-[var(--width)]",
