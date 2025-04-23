@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
-// import Providers from "./providers";
+import { Nunito_Sans } from "next/font/google";
+import Providers from "./providers";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+})
 
 export const metadata: Metadata = {
   title: "Nitro",
-  description: "An AI Integrated Web3 Micrloan Platform Built for Borrowers and Lenders ",
+  description: "Your one stop platform for microloans onchain",
   icons: "/logo.svg"
 };
 
@@ -29,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${nunitoSans.className} antialiased`}
       >
         {/* <Providers> */}
           <Header/>
