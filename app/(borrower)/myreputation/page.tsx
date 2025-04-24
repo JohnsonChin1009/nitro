@@ -23,9 +23,9 @@ const MyReputation = () => {
       <div className="px-[50px] w-full flex flex-col justify-center">
         <div className="flex flex-col space-y-2 py-3">
         <h1 className="text-3xl font-bold ">
-          My Financial Pet Reputation
+          My Financial Reputation NFT
         </h1>
-        <p>Your Reputation Score As Your Financial Pet Cat </p>
+        <p>Raise your reputation score as a financial pet cat — serving as your credit score</p>
         </div>
        
 
