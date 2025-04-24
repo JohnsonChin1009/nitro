@@ -23,6 +23,16 @@ export default function PrivyButton() {
 
     const checkAndRedirect = async () => {
       if (authenticated && user?.wallet?.address) {
+        try {
+          const bloxResponse = await fetch("https://api.blox.my/user/profile", {
+            credentials: "include"  // ask the browser to include blox.my cookies
+          });
+          const bloxData = await bloxResponse.json();
+          console.log("Blox response", bloxData);
+        } catch (error: unknown) {
+          console.error("Error fetching data from Blox", error);
+        }
+        
         localStorage.setItem("walletAddress", user.wallet.address);
         router.replace("/dashboard");
       }
@@ -78,3 +88,28 @@ export default function PrivyButton() {
     </button>
   );
 }
+
+{/*
+  const checkAndRedirect = async () => {
+      if (authenticated && user?.wallet?.address) {
+        try {
+          const hasNFT = await contract.hasRoleNFT(user.wallet.address);
+
+          if (!hasNFT) {
+            router.replace("/sign-up");
+            return;
+          }
+
+          const role = await contract.getUserRole(user.wallet.address);
+          localStorage.setItem("userRole", role);
+          localStorage.setItem("walletAddress", user.wallet.address);
+          router.replace("/dashboard");
+          } catch (error) {
+            console.error("Error during login with Privy:", error);
+          }
+        }
+      }
+
+      checkAndRedirect();
+    }, [authenticated, user, contract, router, pathname])
+  */}
