@@ -178,3 +178,94 @@ export const mockUserData = {
       IncomeRange: "$25,000-49,999",
     },
   ]
+
+  export const assetitems = [
+    {
+      id: "1",
+      image: "/placeholder.svg?height=400&width=600",
+      title: "Premium Subscription",
+      description: "Get access to all premium features for one month.",
+      pointsNeeded: 500,
+    },
+    {
+      id: "2",
+      image: "/placeholder.svg?height=400&width=600",
+      title: "Gift Card",
+      description: "Redeem a $25 gift card for your favorite store.",
+      pointsNeeded: 1000,
+    },
+    {
+      id: "3",
+      image: "/placeholder.svg?height=400&width=600",
+      title: "Exclusive Webinar",
+      description: "Join our exclusive webinar with industry experts.",
+      pointsNeeded: 300,
+    },
+    {
+      id: "4",
+      image: "/placeholder.svg?height=400&width=600",
+      title: "Custom Merchandise",
+      description: "Get a branded t-shirt, mug, or other merchandise.",
+      pointsNeeded: 750,
+    },
+    {
+      id: "5",
+      image: "/placeholder.svg?height=400&width=600",
+      title: "VIP Support",
+      description: "Priority support for all your questions for 3 months.",
+      pointsNeeded: 600,
+    },
+    {
+      id: "6",
+      image: "/placeholder.svg?height=400&width=600",
+      title: "Early Access",
+      description: "Get early access to new features before they're released.",
+      pointsNeeded: 450,
+    },
+  ]
+
+
+  export const swagitems = [
+    {
+      id: "1",
+      image: "/swag/headphones.svg?height=400&width=600",
+      title: "Noise-Cancelling Headphones",
+      description: "Enjoy your music and meetings with premium headphones.",
+      pointsNeeded: 1200,
+    },
+    {
+      id: "2",
+      image: "/swag/waterbottle.svg?height=400&width=600",
+      title: "Eco-Friendly Water Bottle",
+      description: "Stay hydrated with a reusable branded water bottle.",
+      pointsNeeded: 300,
+    },
+    {
+      id: "3",
+      image: "/swag/laptopstand.svg?height=400&width=600",
+      title: "Ergonomic Laptop Stand",
+      description: "Improve posture with this sleek, portable laptop stand.",
+      pointsNeeded: 700,
+    },
+    {
+      id: "4",
+      image: "/swag/notebook.svg?height=400&width=600",
+      title: "Leather Notebook",
+      description: "A premium notebook for your notes, doodles, and plans.",
+      pointsNeeded: 250,
+    },
+    {
+      id: "5",
+      image: "/swag/stickers.svg?height=400&width=600",
+      title: "Sticker Pack",
+      description: "Decorate your laptop with a pack of fun, branded stickers.",
+      pointsNeeded: 150,
+    },
+    {
+      id: "6",
+      image: "/swag/hoodie.svg?height=400&width=600",
+      title: "Limited Edition Hoodie",
+      description: "Snag this comfy hoodie with our exclusive event design.",
+      pointsNeeded: 1000,
+    },
+  ];
