@@ -18,7 +18,7 @@ const PaymentCard = ({currentPhase, currentPhaseData, paymentMade, handleMakePay
         <div className="space-y-1">
           <p className="text-sm font-medium">Current Phase</p>
           <p className="text-lg font-semibold">
-            Phase {currentPhase}: {currentPhaseData.name}
+          ${currentPhaseData.amount.toLocaleString()}
           </p>
         </div>
         <div className="space-y-1">

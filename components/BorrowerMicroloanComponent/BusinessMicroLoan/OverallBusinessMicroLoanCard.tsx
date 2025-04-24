@@ -1,9 +1,30 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData, paymentMade}: any) => {
+type PhaseDetails = {
+  name: string
+  amount: number
+  dueDate: string
+  description: string
+  strategies: string[]
+  earningTips: string[]
+}
+
+interface Props {
+  currentPhase: number
+  currentPhaseData: PhaseDetails
+  phaseData: Record<number, PhaseDetails>
+  paymentMade: boolean
+}
+
+const OverallBusinessMicroLoanCard = ({
+  currentPhase,
+  currentPhaseData,
+  phaseData,
+  paymentMade,
+}: Props) => {
   return (
-      <Card className="h-full">
+    <Card className="h-full">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl">Business & Loan Overview</CardTitle>
       </CardHeader>
@@ -13,11 +34,15 @@ const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData
           <h3 className="font-medium mb-3">Business Details</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <h4 className="font-medium text-sm text-muted-foreground mb-1">Business Name</h4>
+              <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                Business Name
+              </h4>
               <p className="font-medium">May Textile Sdn Bhd</p>
             </div>
             <div>
-              <h4 className="font-medium text-sm text-muted-foreground mb-1">Business Type</h4>
+              <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                Business Type
+              </h4>
               <p className="font-medium">Artisan Business</p>
             </div>
           </div>
@@ -28,15 +53,19 @@ const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData
           <h3 className="font-medium mb-3">Loan Summary</h3>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="p-4 rounded-lg bg-muted/50">
-              <h4 className="font-medium text-sm text-muted-foreground mb-1">Total Loan Amount</h4>
-              <p className="font-bold text-2xl">RM 15,000</p>
+              <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                Total Loan Amount
+              </h4>
+              <p className="font-bold text-2xl">RM 10,000</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50">
-              <h4 className="font-medium text-sm text-muted-foreground mb-1">Remaining Balance</h4>
+              <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                Remaining Balance
+              </h4>
               <p className="font-bold text-2xl">
                 RM{" "}
                 {(
-                  15000 -
+                  10000 -
                   (currentPhase > 1 ? phaseData[1].amount : 0) -
                   (currentPhase > 2 ? phaseData[2].amount : 0) -
                   (paymentMade && currentPhase === 3 ? phaseData[3].amount : 0)
@@ -44,7 +73,9 @@ const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData
               </p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50">
-              <h4 className="font-medium text-sm text-muted-foreground mb-1">Next Payment Due</h4>
+              <h4 className="font-medium text-sm text-muted-foreground mb-1">
+                Next Payment Due
+              </h4>
               <p className="font-bold text-2xl">
                 {paymentMade && currentPhase === 3 ? (
                   <span className="text-green-600">Fully Paid</span>
@@ -71,14 +102,17 @@ const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData
         <div className="border-t pt-4">
           <h3 className="font-medium mb-2">Phased Approach</h3>
           <p className="text-muted-foreground">
-            Your RM15,000 microloan is structured into three strategic phases aligned with the natural growth
-            stages of typical startups based on historical data. This approach ensures funds are allocated to the most critical
-            needs at each development stage.
+            Your RM
+            {Object.values(phaseData)
+              .reduce((a, b) => a + b.amount, 0)
+              .toLocaleString()}{" "}
+            microloan is structured into {Object.keys(phaseData).length}{" "}
+            strategic phases aligned with the natural growth...
           </p>
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default OverallBusinessMicroLoanCard
+export default OverallBusinessMicroLoanCard;
