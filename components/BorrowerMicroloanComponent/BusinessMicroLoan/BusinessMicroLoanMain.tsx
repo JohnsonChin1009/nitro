@@ -1,16 +1,24 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { CheckCircle2, CircleDollarSign, Info } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { cn } from "@/lib/utils"
-import OverallBusinessMicroLoanCard from "./OverallBusinessMicroLoanCard"
-import PaymentCard from "./PaymentCard"
-import PaymentSuccessModal from "./PaymentSuccessModal"
+import { useEffect, useState } from "react";
+import { CheckCircle2, CircleDollarSign, Info } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+import OverallBusinessMicroLoanCard from "./OverallBusinessMicroLoanCard";
+import PaymentCard from "./PaymentCard";
+import PaymentSuccessModal from "./PaymentSuccessModal";
 import { BorrowerRewardModal } from "@/components/BorrowerRewardModal"
 import { generateRepaymentStrategies } from "@/lib/gemini"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const BusinessMicroLoanMain = () => {
   const [openReward, setRewardModalOpen] = useState(false)
@@ -83,9 +91,15 @@ const BusinessMicroLoanMain = () => {
   return (
     <section className="py-5 min-h-screen min-w-[1100px]">
       <div className="px-[50px] w-full flex flex-col justify-center">
-        <h1 className="text-3xl font-bold mb-6">Business Microloan Overview</h1>
+        <div className="flex flex-row justify-between">
+          <h1 className="text-3xl font-bold mb-6 ">
+            Business Microloan Overview
+          </h1>
+          <Link href={"/microloan"}>
+            <Button>Back to MicroLoan Dashboard</Button>
+          </Link>
+        </div>
 
-        {/* Progress & Timeline */}
         <div className="mb-10">
           <div className="flex justify-between mb-2">
             <span className="text-sm font-medium">Progress</span>

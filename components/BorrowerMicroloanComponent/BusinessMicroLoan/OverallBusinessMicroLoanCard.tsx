@@ -93,6 +93,10 @@ const OverallBusinessMicroLoanCard = ({
           </div>
         </div>
 
+        <div className="min-w-[400px] flex justify-centermy-2">
+            <Button className="w-full">Retrieve Loan For Phase {currentPhase}</Button>
+        </div>
+
         {/* Phased Approach Section - Simplified */}
         <div className="border-t pt-4">
           <h3 className="font-medium mb-2">Phased Approach</h3>
