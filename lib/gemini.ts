@@ -59,8 +59,8 @@ export async function generateInterestRateAnalysis() {
       })).reverse(),
       treasuryYield: (treasuryData.data || []).slice(0, 6).map((item: any) => ({
         month: new Date(item.date).toLocaleDateString('en-US', { month: 'short' }),
-        rate: parseFloat(item.value)
-      })).reverse()
+        rate: isNaN(parseFloat(item.value)) ? null : parseFloat(item.value)
+      })).reverse()      
     };
 
     console.log("✨ Formatted Market Trends:", JSON.stringify(formattedMarketTrends, null, 2));
@@ -76,11 +76,18 @@ export async function generateInterestRateAnalysis() {
       }),
     });
 
+    // // 🚨 Log full debug info before parsing
+    // const rawText = await response.text();
+    // console.log("📦 Raw Response Status:", response.status);
+    // console.log("📦 Response Headers:", [...response.headers.entries()]);
+    // console.log("📦 Raw Response Body:", rawText);
+
     if (!response.ok) {
       throw new Error("Failed to generate interest rate analysis");
     }
 
     const data = await response.json();
+    console.log("📬 Response from Interest Rate API:", data);
     return {
       ...data.analysis,
       marketTrends: formattedMarketTrends
