@@ -1,0 +1,15 @@
+{
+    "name": "Nitro Credit SBT",
+    "description": "Soulbound token representing your credit and reputation.",
+    "image": "ipfs://bafkreic25uxmvbsoqtrpq4c5ihihbhbrumxboubpduki4qxzkb4ehmpjra",
+    "attributes": [
+      {
+        "trait_type": "Credit Score",
+        "value": "100"
+      },
+      {
+        "trait_type": "Reputation",
+        "value": "0"
+      }
+    ]
+  }
