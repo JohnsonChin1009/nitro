@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData, paymentMade}: any) => {
   return (
@@ -60,6 +61,10 @@ const OverallBusinessMicroLoanCard = ({currentPhase, currentPhaseData, phaseData
               </p>
             </div>
           </div>
+        </div>
+
+        <div className="min-w-[400px] flex justify-centermy-2">
+            <Button className="w-full">Retrieve Loan For Phase {currentPhase}</Button>
         </div>
 
         {/* Phased Approach Section - Simplified */}

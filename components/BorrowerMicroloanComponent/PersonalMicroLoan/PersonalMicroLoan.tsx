@@ -8,6 +8,8 @@ import PersonalMicroLoanInfo from "./PersonalMicroLoanInfo";
 import SuggestRepaymentStrategyTab from "./SuggestRepaymentStrategyTab";
 import SuggestedRepaymentScheduleTab from "./SuggestedRepaymentScheduleTab";
 import SimulatorTab from "./SimulatorTab";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const PersonalMicroLoan = ({ data }: any) => {
   // State for payment simulator
@@ -66,7 +68,12 @@ const PersonalMicroLoan = ({ data }: any) => {
   return (
     <section className="py-5 min-h-screen min-w-[1100px]">
       <div className="px-[50px] w-full flex flex-col justify-center">
-        <h1 className="text-3xl font-bold mb-6">Personal Microloan</h1>
+        <div className="flex flex-row justify-between">
+          <h1 className="text-3xl font-bold mb-6">Personal Microloan</h1>
+          <Link href={"/microloan"}>
+            <Button>Back to MicroLoan Dashboard</Button>
+          </Link>
+        </div>
 
         {/* Loan Details and Progress Card */}
         <PersonalMicroLoanInfo data={data} />
