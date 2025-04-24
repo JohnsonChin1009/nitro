@@ -3,63 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { ArrowRight } from "lucide-react"
+import { approvedmicroloans } from "@/mockData/mockData"
+import Link from "next/link"
 
-type MicroloanType = "Business" | "Personal" | "Group Borrowing"
 type RiskLevel = "Low" | "Medium" | "High"
-
-interface Microloan {
-  id: string
-  name: string
-  type: MicroloanType
-  riskScore: {
-    level: RiskLevel
-    value: number // Out of 100
-  }
-  interestRate: number
-  amount: number
-  currency: string
-}
-
 export function BorrowerMicroloanCard() {
-  const microloans: Microloan[] = [
-    {
-      id: "small-business-starter-ml2023",
-      name: "Small Business Starter",
-      type: "Business",
-      riskScore: {
-        level: "Medium",
-        value: 58,
-      },
-      interestRate: 4.5,
-      amount: 15000,
-      currency: "MYR",
-    },
-    {
-      id: "purchase-bicycle-p2023x",
-      name: "Purchase of Bicycle",
-      type: "Personal",
-      riskScore: {
-        level: "Low",
-        value: 32,
-      },
-      interestRate: 3.2,
-      amount: 2500,
-      currency: "MYR",
-    },
-    {
-      id: "washing-machine-gb2023y",
-      name: "Purchase of New Washing Machine",
-      type: "Group Borrowing",
-      riskScore: {
-        level: "Low",
-        value: 25,
-      },
-      interestRate: 2.8,
-      amount: 3800,
-      currency: "MYR",
-    },
-  ]
-
+  
   const getRiskColor = (level: RiskLevel) => {
     switch (level) {
       case "Low":
@@ -73,18 +22,6 @@ export function BorrowerMicroloanCard() {
     }
   }
 
-  const getRiskProgressColor = (level: RiskLevel) => {
-    switch (level) {
-      case "Low":
-        return "bg-green-500"
-      case "Medium":
-        return "bg-amber-500"
-      case "High":
-        return "bg-red-500"
-      default:
-        return "bg-gray-500"
-    }
-  }
 
   return (
     <Card className="w-full  bg-white shadow-md">
@@ -93,7 +30,7 @@ export function BorrowerMicroloanCard() {
       </CardHeader>
       <CardContent className="pt-2 pb-3">
         <div className="space-y-2">
-          {microloans.map((loan) => (
+          {approvedmicroloans.map((loan) => (
             <div key={loan.id} className="py-3 px-6 border rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
               <div className="flex flex-col lg:flex-row justify-between gap-6">
                 <div className="space-y-4">
@@ -117,11 +54,14 @@ export function BorrowerMicroloanCard() {
                         {loan.riskScore.level} ({loan.riskScore.value}/100)
                       </span>
                     </div>
+                   
                     <Progress
                       value={loan.riskScore.value}
-                      className="h-2"
+                      className="h-2 max-w-[400px]"
                      
                     />
+                  
+                  
                   </div>
                 </div>
 
@@ -138,9 +78,11 @@ export function BorrowerMicroloanCard() {
                       </p>
                     </div>
                   </div>
+                  <Link href={`/microloan/${loan.id}`}>
                   <Button className="whitespace-nowrap self-start lg:self-end">
                     Details <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
+                  </Link>
                 </div>
               </div>
             </div>

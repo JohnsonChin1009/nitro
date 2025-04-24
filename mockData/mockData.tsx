@@ -1,6 +1,24 @@
 // Mock data - in a real app this would come from your Web3 connection
 import { Microloan } from "@/interfaces/Interface"
 import { Award, Wallet, TrendingUp, Users, Zap, ChevronRight, Sparkles } from "lucide-react"
+
+type MicroloanType = "Business" | "Personal" | "Group Borrowing"
+type RiskLevel = "Low" | "Medium" | "High"
+
+interface MicroloanApproved {
+  id: string
+  name: string
+  type: MicroloanType
+  riskScore: {
+    level: RiskLevel
+    value: number // Out of 100
+  }
+  interestRate: number
+  amount: number
+  currency: string
+}
+
+
 export const mockUserData = {
     name: "Johnson",
     handle: "@johnson",
@@ -269,3 +287,42 @@ export const mockUserData = {
       pointsNeeded: 1000,
     },
   ];
+
+  export const approvedmicroloans: MicroloanApproved[] = [
+    {
+      id: "small-business-starter-ml2023",
+      name: "Small Business Starter",
+      type: "Business",
+      riskScore: {
+        level: "Medium",
+        value: 58,
+      },
+      interestRate: 4.5,
+      amount: 15000,
+      currency: "MYR",
+    },
+    {
+      id: "purchase-bicycle-p2023x",
+      name: "Purchase of Bicycle",
+      type: "Personal",
+      riskScore: {
+        level: "Low",
+        value: 32,
+      },
+      interestRate: 3.2,
+      amount: 2500,
+      currency: "MYR",
+    },
+    {
+      id: "washing-machine-gb2023y",
+      name: "Purchase of New Washing Machine",
+      type: "Group Borrowing",
+      riskScore: {
+        level: "Low",
+        value: 25,
+      },
+      interestRate: 2.8,
+      amount: 3800,
+      currency: "MYR",
+    },
+  ]

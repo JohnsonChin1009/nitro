@@ -36,3 +36,6 @@ export interface Microloan {
     EmploymentStatus: string
     IncomeRange: string
   }
+
+
+  
