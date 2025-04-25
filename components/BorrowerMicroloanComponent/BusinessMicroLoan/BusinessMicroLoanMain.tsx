@@ -15,78 +15,96 @@ import { cn } from "@/lib/utils";
 import OverallBusinessMicroLoanCard from "./OverallBusinessMicroLoanCard";
 import PaymentCard from "./PaymentCard";
 import PaymentSuccessModal from "./PaymentSuccessModal";
-import { BorrowerRewardModal } from "@/components/BorrowerRewardModal"
-import { generateRepaymentStrategies } from "@/lib/gemini"
+import { BorrowerRewardModal } from "@/components/BorrowerRewardModal";
+import { generateRepaymentStrategies } from "@/lib/gemini";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const BusinessMicroLoanMain = () => {
-  const [openReward, setRewardModalOpen] = useState(false)
-  const [currentPhase, setCurrentPhase] = useState(1)
-  const [paymentMade, setPaymentMade] = useState(false)
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [openReward, setRewardModalOpen] = useState(false);
+  const [currentPhase, setCurrentPhase] = useState(1);
+  const [paymentMade, setPaymentMade] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   type PhaseDetails = {
-    name: string
-    amount: number
-    dueDate: string
-    description: string
-    strategies: string[]
-    earningTips: string[]
-  }
-  
-  const [phaseData, setPhaseData] = useState<Record<number, PhaseDetails> | null>(null)
+    name: string;
+    amount: number;
+    dueDate: string;
+    description: string;
+    strategies: string[];
+    earningTips: string[];
+  };
 
-  const totalPhases = phaseData ? Object.keys(phaseData).length : 3
-  const progressPercentage = (currentPhase / totalPhases) * 100
+  const [phaseData, setPhaseData] = useState<Record<
+    number,
+    PhaseDetails
+  > | null>(null);
+
+  const totalPhases = phaseData ? Object.keys(phaseData).length : 3;
+  const progressPercentage = ((currentPhase - 1) / (totalPhases - 1)) * 100;
 
   useEffect(() => {
     const fetchPhases = async () => {
-      console.log("🚀 Fetching Gemini business strategy...")
-      const data = await generateRepaymentStrategies("Medium")
+      const businessName = "May Textile Sdn Bhd";
+      const businessType = "Artisan Business";
+
+      console.log("🚀 Fetching Gemini business strategy...");
+      const data = await generateRepaymentStrategies(
+        "Medium",
+        businessName,
+        businessType
+      );
       if (data) {
-        console.log("✅ Gemini response:", data)
-        const structured: Record<number, PhaseDetails> = {}
+        console.log("✅ Gemini response:", data);
+        const structured: Record<number, PhaseDetails> = {};
 
         for (let i = 0; i < data.numberOfPhases; i++) {
           structured[i + 1] = {
             name: data.phaseTitles[i],
             amount: data.amounts[i],
-            dueDate: new Date(Date.now() + data.dueDays[i] * 86400000).toISOString().split("T")[0],
+            dueDate: new Date(Date.now() + data.dueDays[i] * 86400000)
+              .toISOString()
+              .split("T")[0],
             description: data.descriptions[i],
-            strategies: data.repaymentStrategies?.[i] ?? ["No strategy tips available"],
+            strategies: data.repaymentStrategies?.[i] ?? [
+              "No strategy tips available",
+            ],
             earningTips: data.earningTips?.[i] ?? ["No income tips available"],
-          }
+          };
         }
 
-        setPhaseData(structured)
+        setPhaseData(structured);
       }
-    }
+    };
 
-    fetchPhases()
-  }, [])
+    fetchPhases();
+  }, []);
 
   const handleMakePayment = () => {
-    setShowSuccessDialog(true)
-  }
+    setShowSuccessDialog(true);
+  };
 
   const confirmPayment = () => {
-    setPaymentMade(true)
-    setShowSuccessDialog(false)
+    setPaymentMade(true);
+    setShowSuccessDialog(false);
 
     setTimeout(() => {
       if (currentPhase < totalPhases) {
-        setCurrentPhase(currentPhase + 1)
-        setPaymentMade(false)
-        setRewardModalOpen(true)
+        setCurrentPhase(currentPhase + 1);
+        setPaymentMade(false);
+        setRewardModalOpen(true);
       }
-    }, 1500)
-  }
+    }, 1500);
+  };
 
   if (!phaseData || !phaseData[currentPhase]) {
-    return <div className="p-10 text-center text-muted-foreground">⏳ Loading repayment strategy from Gemini...</div>
+    return (
+      <div className="p-10 text-center text-muted-foreground">
+        ⏳ Loading repayment strategy from Gemini...
+      </div>
+    );
   }
-  
-  const currentPhaseData = phaseData[currentPhase]
+
+  const currentPhaseData = phaseData[currentPhase];
 
   return (
     <section className="py-5 min-h-screen min-w-[1100px]">
@@ -111,28 +129,36 @@ const BusinessMicroLoanMain = () => {
 
           <div className="flex justify-between mt-2">
             {[...Array(totalPhases)].map((_, i) => {
-              const phase = i + 1
+              const phase = i + 1;
+              const isCompleted =
+                phase < currentPhase || (phase === currentPhase && paymentMade);
+
               return (
                 <div key={phase} className="flex flex-col items-center">
                   <div
                     className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium",
-                      phase < currentPhase
+                      isCompleted
                         ? "bg-green-100 text-green-700"
                         : phase === currentPhase
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground",
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
                     )}
                   >
-                    {phase < currentPhase ? <CheckCircle2 className="h-5 w-5" /> : phase}
+                    {isCompleted ? <CheckCircle2 className="h-5 w-5" /> : phase}
                   </div>
                   <span
-                    className={cn("text-xs mt-1", phase === currentPhase ? "font-medium" : "text-muted-foreground")}
+                    className={cn(
+                      "text-xs mt-1",
+                      phase === currentPhase
+                        ? "font-medium"
+                        : "text-muted-foreground"
+                    )}
                   >
                     Phase {phase}
                   </span>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
@@ -140,21 +166,37 @@ const BusinessMicroLoanMain = () => {
         {/* Layout: Summary + Payment */}
         <div className="mb-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <OverallBusinessMicroLoanCard currentPhase={currentPhase} currentPhaseData={currentPhaseData} phaseData={phaseData} paymentMade={paymentMade} />
+            <OverallBusinessMicroLoanCard
+              currentPhase={currentPhase}
+              currentPhaseData={currentPhaseData}
+              phaseData={phaseData}
+              paymentMade={paymentMade}
+            />
           </div>
           <div className="lg:col-span-1">
-            <PaymentCard currentPhase={currentPhase} currentPhaseData={currentPhaseData} paymentMade={paymentMade} handleMakePayment={handleMakePayment} />
+            <PaymentCard
+              currentPhase={currentPhase}
+              currentPhaseData={currentPhaseData}
+              paymentMade={paymentMade}
+              handleMakePayment={handleMakePayment}
+            />
           </div>
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="phase1">
           <TabsList className={`grid w-full grid-cols-${totalPhases}`}>
-          {Object.entries(phaseData).map(([phase, data]: [string, PhaseDetails]) => (
-              <TabsTrigger key={phase} value={`phase${phase}`} className={+phase === currentPhase ? "font-medium" : ""}>
-                Phase {phase}: {data.name}
-              </TabsTrigger>
-            ))}
+            {Object.entries(phaseData).map(
+              ([phase, data]: [string, PhaseDetails]) => (
+                <TabsTrigger
+                  key={phase}
+                  value={`phase${phase}`}
+                  className={+phase === currentPhase ? "font-medium" : ""}
+                >
+                  Phase {phase}: {data.name}
+                </TabsTrigger>
+              )
+            )}
           </TabsList>
 
           {Object.entries(phaseData).map(([phase, data]) => (
@@ -173,9 +215,11 @@ const BusinessMicroLoanMain = () => {
                       Repayment Strategies
                     </h3>
                     <ul className="space-y-2 pl-6 list-disc">
-                      {data.strategies.map((strategy: string, index: number) => (
-                        <li key={index}>{strategy}</li>
-                      ))}
+                      {data.strategies.map(
+                        (strategy: string, index: number) => (
+                          <li key={index}>{strategy}</li>
+                        )
+                      )}
                     </ul>
                   </div>
 
@@ -215,7 +259,7 @@ const BusinessMicroLoanMain = () => {
         onAccept={() => setRewardModalOpen(false)}
       />
     </section>
-  )
-}
+  );
+};
 
-export default BusinessMicroLoanMain
+export default BusinessMicroLoanMain;

@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function POST(request: Request) {
-  const { category, amount, riskLevel } = await request.json();
+  const { category, amount, riskLevel, businessName, businessType } = await request.json();
 
-  console.log("Received:", { category, amount, riskLevel });
+  console.log("Received:", { category, amount, riskLevel, businessName, businessType });
 
   const API_KEY = process.env.GEMINI_API_KEY;
   console.log("✅ API Key Loaded in API Route:", API_KEY);
@@ -21,6 +21,8 @@ export async function POST(request: Request) {
 You are a financial assistant helping to structure microloan repayments.
 
 Given the following:
+- Business Name: ${businessName}
+- Business Type: ${businessType}
 - Category: ${category}
 - Loan Amount: ${amount}
 - Risk Level: ${riskLevel}

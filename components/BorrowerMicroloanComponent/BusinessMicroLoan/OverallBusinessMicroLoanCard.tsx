@@ -56,7 +56,7 @@ const OverallBusinessMicroLoanCard = ({
               <h4 className="font-medium text-sm text-muted-foreground mb-1">
                 Total Loan Amount
               </h4>
-              <p className="font-bold text-2xl">RM 10,000</p>
+              <p className="font-bold text-2xl">RM 15,000</p>
             </div>
             <div className="p-4 rounded-lg bg-muted/50">
               <h4 className="font-medium text-sm text-muted-foreground mb-1">
@@ -65,7 +65,7 @@ const OverallBusinessMicroLoanCard = ({
               <p className="font-bold text-2xl">
                 RM{" "}
                 {(
-                  10000 -
+                  15000 -
                   (currentPhase > 1 ? phaseData[1].amount : 0) -
                   (currentPhase > 2 ? phaseData[2].amount : 0) -
                   (paymentMade && currentPhase === 3 ? phaseData[3].amount : 0)

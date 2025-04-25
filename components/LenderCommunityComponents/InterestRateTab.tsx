@@ -277,18 +277,18 @@ export default function InterestRateTab() {
                     <div className="grid grid-cols-3 gap-4">
                       <div className="bg-muted rounded-lg p-4">
                         <div className="text-sm text-muted-foreground mb-1">
-                          Fed Rate
+                          Latest Fed Rate
                         </div>
                         <div className="text-2xl font-bold">
-                          {marketData.fedRate?.[0]?.rate.toFixed(2)}%
+                        {marketData.fedRate?.[marketData.fedRate.length - 1]?.rate.toFixed(2)}%
                         </div>
                       </div>
                       <div className="bg-muted rounded-lg p-4">
                         <div className="text-sm text-muted-foreground mb-1">
-                          10Y Treasury
+                          Latest 10Y Treasury
                         </div>
                         <div className="text-2xl font-bold">
-                          {marketData.treasuryYield?.[0]?.rate.toFixed(2)}%
+                        {marketData.treasuryYield?.[marketData.treasuryYield.length - 1]?.rate.toFixed(2)}%
                         </div>
                       </div>
                       <div className="bg-muted rounded-lg p-4">
@@ -387,7 +387,7 @@ export default function InterestRateTab() {
 
               <div>
                 <h3 className="text-lg font-medium mb-3">AI Recommendation</h3>
-                <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+                <div className="bg-white border border-muted rounded-lg p-4 shadow-sm">
                   <div className="flex justify-between items-center mb-3">
                     {/* <div>
                       <span className="text-sm text-muted-foreground">Current Rate</span>
@@ -408,34 +408,61 @@ export default function InterestRateTab() {
                       <h4 className="text-sm font-medium mb-2">
                         Market Analysis
                       </h4>
-                      <div className="space-y-2 text-sm">
-                        <p>
-                          <strong>Fed Rate Impact:</strong>{" "}
-                          {analysisData?.marketAnalysis.fedRateImpact}
-                        </p>
-                        <p>
-                          <strong>Treasury Yield Impact:</strong>{" "}
-                          {analysisData?.marketAnalysis.treasuryYieldImpact}
-                        </p>
-                        <p>
-                          <strong>Risk Assessment:</strong>{" "}
-                          {analysisData?.marketAnalysis.riskAssessment}
-                        </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-muted/30 p-4 rounded-lg">
+                          <h4 className="font-semibold text-sm mb-2">
+                            📈 Fed Rate Impact
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {analysisData?.marketAnalysis.fedRateImpact}
+                          </p>
+                        </div>
+                        <div className="bg-muted/30 p-4 rounded-lg">
+                          <h4 className="font-semibold text-sm mb-2">
+                            📊 Treasury Yield Impact
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {analysisData?.marketAnalysis.treasuryYieldImpact}
+                          </p>
+                        </div>
+                        <div className="bg-muted/30 p-4 rounded-lg md:col-span-2">
+                          <h4 className="font-semibold text-sm mb-2">
+                            🧠 Risk Assessment
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {analysisData?.marketAnalysis.riskAssessment}
+                          </p>
+                        </div>
                       </div>
                     </div>
                     <div>
                       <h4 className="text-sm font-medium mb-2">
                         Expected Impact
                       </h4>
-                      <div className="space-y-2 text-sm">
-                        <p>
-                          <strong>Lender Profitability:</strong>{" "}
-                          {analysisData?.expectedImpact.lenderProfitability}
-                        </p>
-                        <p>
-                          <strong>Borrower Affordability:</strong>{" "}
-                          {analysisData?.expectedImpact.borrowerAffordability}
-                        </p>
+                      <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                        {/* Lender Profitability */}
+                        <div className="border border-green-300 bg-green-50 p-4 rounded-lg shadow-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-green-600 font-semibold">
+                              ✅ Lender Profitability
+                            </span>
+                          </div>
+                          <p className="text-muted-foreground">
+                            {analysisData?.expectedImpact.lenderProfitability}
+                          </p>
+                        </div>
+
+                        {/* Borrower Affordability */}
+                        <div className="border border-red-300 bg-red-50 p-4 rounded-lg shadow-sm">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-red-600 font-semibold">
+                              ⚠️ Borrower Affordability
+                            </span>
+                          </div>
+                          <p className="text-muted-foreground">
+                            {analysisData?.expectedImpact.borrowerAffordability}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
