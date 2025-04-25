@@ -1,9 +1,6 @@
 # Nitro
 
-Nitro is a decentralized financial platform leveraging zero-knowledge proofs for microloans that also features reputation management. The platform enables users to stake, borrow, and build reputation & credit score via a Soulbound Token (SBT) system.
-
-## How it Works
-{Insert Image here by @Sean Hoe}
+Nitro is a decentralized financial platform leveraging zero-knowledge proofs for privacy-preserving credit and reputation management. The platform enables users to stake, borrow, and build reputation through a Soulbound Token (SBT) system.
 
 ## Features
 
@@ -12,6 +9,7 @@ Nitro is a decentralized financial platform leveraging zero-knowledge proofs for
 - **Lending & Borrowing Pools**: Community-based lending pools with reputation-based access
 - **Privacy-First**: Personal information stays private through ZK verification
 - **User Dashboard**: Intuitive interface for managing staking, borrowing, and rewards
+- **Role-Based Access**: Different experiences for stakers, borrowers, and validators
 
 ## Tech Stack
 1. NextJS
@@ -19,6 +17,7 @@ Nitro is a decentralized financial platform leveraging zero-knowledge proofs for
 3. SnarkJS
 4. Circomlib
 5. Hardhat
+6. HuggingFace
 
 ## Deployed and Verifier Contracts
 1. ZK Proof Contract for Age Verification. View [here](https://sepolia.scrollscan.com/address/0x16596F3aD0625C0106887FE4b51E073A4669c22b#code).
@@ -68,10 +67,6 @@ Visit `http://localhost:3000` to see the application.
 ## Zero-Knowledge Proofs
 
 Nitro uses zero-knowledge proofs to verify user age without revealing actual birth dates. The circuit is implemented in Circom and verification happens on-chain through the deployed verifier contract.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
 

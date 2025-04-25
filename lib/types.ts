@@ -1,7 +1,10 @@
+import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
+
 export interface User {
     wallet_address: string; // Primary key
     username: string;
     created_at: string;
+    avatar_url: string;
   }
   
 export interface Pool {
@@ -26,4 +29,22 @@ export interface Message {
   created_at: string; // Timestamp when the message was sent
   updated_at: string; // Timestamp when the message was updated
 }
-  
+
+export interface PoolInfo {
+  poolAddress: string;
+  poolDescription: string;
+  poolTokenAddress: string;
+  poolInterestRate: number;
+  poolQuorum: number;
+  poolExpiration: Timestamp;
+  poolminBalance: number;
+  poolinitialStake: number;
+}
+
+export interface UserCreditProfile {
+  creditScore: number;
+  reputationScore: number;
+  lastActivity: number; // UNIX timestamp
+  totalTransactions: number;
+  isActive: boolean;
+}

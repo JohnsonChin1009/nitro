@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "./providers";
+import { UserProvider } from "@/app/context/UserContext";
 import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
@@ -25,8 +26,10 @@ export default function RootLayout({
         className={`${nunitoSans.className} antialiased`}
       >
         <Providers>
+          <UserProvider>
           {children}
           <Toaster />
+          </UserProvider>
         </Providers>
       </body>
     </html>

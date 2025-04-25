@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "ipfs.io",
         port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "fsmwldyfybsryktkoyzt.supabase.co",
+        port: "",
       }
     ]
   }

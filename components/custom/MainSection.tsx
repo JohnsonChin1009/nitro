@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import DashboardSection from "@/components/custom/DashboardSection";
 import PoolSection from "@/components/custom/PoolSection";
 import ProfileSection from "@/components/custom/ProfileSection";
+import GovernanceSection from "@/components/custom/GovernanceSection";
 
 interface MainSectionProps {
   selectedTab: string;
@@ -25,7 +26,7 @@ export default function MainSection({ selectedTab }: MainSectionProps) {
       case "profile":
         return <ProfileSection />;
       case "governance":
-        return <div>Governance content here</div>;
+        return <GovernanceSection />;
       default:
         return <div>No Tab Was Selected</div>;
     }

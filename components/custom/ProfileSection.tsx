@@ -1,64 +1,133 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { UserCreditProfile } from "@/lib/types";
+import { useUser } from "@/app/context/UserContext";
 import Image from "next/image";
 
 export default function ProfileSection() {
-  const recentActivity = [
-    "Staked 500 MYR into Pool A",
-    "Borrowed 300 MYR from Community Pool",
-    "Claimed rewards from Pool B",
-    "Voted on Proposal #3",
-  ];
+  const [userData, setUserData] = useState<UserCreditProfile | null>(null);
+  const { user } = useUser();
 
-  const user = {
-    wallet: "0x1234...89Fa",
-    role: "Staker",
-    nftImage: "https://ipfs.io/ipfs/bafkreialbyjuyfezwk7txbdikx6rah3lcxajgjbpf3t3uw4ujb4w34mfo4", // placeholder NFT image
-    nftName: "Nitro Access Pass",
-    nftId: "#0198",
-  };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const tokenId = localStorage.getItem("tokenId");
+      if (!tokenId) return;
+
+      try {
+        const response = await fetch("/api/getUserData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tokenId }),
+        });
+
+        const data = await response.json();
+        setUserData(data.userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 p-8 w-full">
-      {/* Recent Activity */}
-      <div className="flex-1">
-        <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-        <div className="bg-white rounded-xl shadow-md divide-y divide-gray-200">
-          {recentActivity.map((activity, idx) => (
-            <div
-              key={idx}
-              className="p-4 hover:bg-gray-50 transition duration-200"
-            >
-              {activity}
+    <div className="w-full max-w-6xl mx-auto p-6">
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Left Column */}
+        <div className="flex-1 space-y-6">
+          {/* Profile Card */}
+          <div className="bg-white dark:bg-zinc-900 shadow-xl rounded-2xl p-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src={user?.avatar_url || "/default-avatar.png"}
+                alt="User Avatar"
+                className="w-16 h-16 rounded-full object-cover border"
+              />
+              <h2 className="text-2xl font-semibold">
+                {user?.username || "Anonymous"}
+              </h2>
             </div>
-          ))}
+            <div className="mt-4">
+              <XPBar
+                label="Reputation"
+                value={userData?.reputationScore ?? 0}
+                max={100}
+              />
+            </div>
+          </div>
+
+          {/* Stats Card */}
+          <div className="bg-white dark:bg-zinc-900 shadow-xl rounded-2xl p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+              <Stat label="Credit Score" value={userData?.creditScore ?? "--"} />
+              <Stat
+                label="Last Activity"
+                value={
+                  userData?.lastActivity
+                    ? new Date(Number(userData.lastActivity) * 1000).toLocaleDateString()
+                    : "--"
+                }
+              />
+              <Stat
+                label="Transactions"
+                value={userData?.totalTransactions ?? "--"}
+              />
+              <Stat
+                label="Status"
+                value={userData?.isActive ? "🟢 Active" : "🔴 Inactive"}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: NFT Card */}
+        <div className="flex-1">
+          <div className="bg-white dark:bg-zinc-900 shadow-2xl rounded-2xl p-6 text-center h-full flex flex-col justify-center items-center relative">
+            <Image
+              src="https://ipfs.io/ipfs/bafkreic25uxmvbsoqtrpq4c5ihihbhbrumxboubpduki4qxzkb4ehmpjra"
+              alt="Nitro Credit SBT"
+              className="w-full max-w-sm rounded-xl object-cover mb-4 border"
+              width={500}
+              height={500}
+            />
+
+            <a href={`https://sepolia.scrollscan.com/token/0xd7121344156d594eb875213d0bdbf2ba24117944?a=${localStorage.getItem("walletAddress")}`}  target="_blank" className="text-xl font-semibold mb-2 hover:underline hover:cursor-pointer">Nitro Credit SBT # {localStorage.getItem("tokenId")}</a>
+            <p className="text-sm text-zinc-500">
+              Soulbound token representing your credit and reputation.
+            </p>
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* NFT Profile Card */}
-      <div className="w-full md:w-[300px]">
-        <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center gap-4">
-          <div className="relative w-32 h-32">
-          <Image
-            src={user.nftImage}
-            alt="NFT"
-            className="rounded-lg border object-cover"
-            fill
-          />
-                    </div>
-          <div>
-            <p className="text-sm text-gray-500">NFT Name</p>
-            <p className="font-semibold">{user.nftName} {user.nftId}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Wallet</p>
-            <p className="font-mono text-sm">{user.wallet}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Role</p>
-            <p className="font-semibold">{user.role}</p>
-          </div>
-        </div>
+function Stat({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div>
+      <div className="text-sm text-zinc-500">{label}</div>
+      <div className="text-xl font-medium mt-1">{value}</div>
+    </div>
+  );
+}
+
+function XPBar({ label, value, max }: { label: string; value: number; max: number }) {
+  const percent = Math.min((value / max) * 100, 100);
+
+  return (
+    <div className="text-left">
+      <div className="text-sm text-zinc-500 mb-1">{label}</div>
+      <div className="text-xs text-zinc-400 mb-1">
+        {value} / {max} XP
+      </div>
+      <div className="w-full bg-zinc-300 dark:bg-zinc-700 rounded-full h-3">
+        <div
+          className="bg-green-500 h-3 rounded-full transition-all duration-500 ease-in-out"
+          style={{ width: `${percent}%` }}
+        />
       </div>
     </div>
   );

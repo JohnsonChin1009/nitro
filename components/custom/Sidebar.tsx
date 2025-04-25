@@ -5,7 +5,7 @@ import { LayoutDashboard, UserRound, WavesLadder, Landmark, PanelLeftClose } fro
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState, useEffect } from "react";
+import { useUser } from "@/app/context/UserContext";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -15,19 +15,13 @@ interface SidebarProps {
 }
 
 export default function Sidebar({isOpen, setIsOpen, selectedTab, setSelectedTab}: SidebarProps) {
-    const [walletAddress, setWalletAddress] = useState<string | null>(null);
+    const { user } = useUser();
     const toggleSidebar = () => {
         if (setIsOpen) {
           setIsOpen(!isOpen);
         }
       };
 
-      useEffect(() => {
-          if (typeof window !== "undefined") {
-              const storedAddress = localStorage.getItem("walletAddress");
-              setWalletAddress(storedAddress);
-          }
-      }, []);
     // Sidebar Layout
     const tabs = [
         { key: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -47,9 +41,9 @@ export default function Sidebar({isOpen, setIsOpen, selectedTab, setSelectedTab}
                         <div className="flex items-center gap-3">
                             <Avatar className="h-10 w-10">
                                 <AvatarImage
-                                    src="https://avatars.githubusercontent.com/u/107231772?v=4"
+                                    src={user?.avatar_url}
                                     // alt={`${username}'s profile image`}
-                                    alt="Johnson's Image"
+                                    alt="Profile Image"
                                 />
                                 <AvatarFallback>JC</AvatarFallback>
                             </Avatar>
@@ -57,7 +51,7 @@ export default function Sidebar({isOpen, setIsOpen, selectedTab, setSelectedTab}
                         {isOpen && (
                             <div>
                                 <h2 className="font-semibold text-sm truncate max-w-28">
-                                    {walletAddress}
+                                    {user?.username}
                                 </h2>
                             </div>
                             )}
