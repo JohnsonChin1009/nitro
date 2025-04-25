@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import PrivyButton from "@/components/custom/PrivyButton";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
@@ -39,7 +38,7 @@ export default function SignUpPage() {
         action: {
           label: "View",
           onClick: () => {
-            window.open(`https://sepolia.scrollscan.com/address/${data.transactionHash}`, "_blank");
+            window.open(`https://sepolia.scrollscan.com/tx//${data.transactionHash}`, "_blank");
           }
         }
       })
@@ -47,7 +46,7 @@ export default function SignUpPage() {
       setTimeout(() => {
         router.push("/dashboard");
       }, 3000);
-      
+
     } catch (error) {
       toast.error("Minting error: " + (error as Error).message);
     }
@@ -73,7 +72,6 @@ export default function SignUpPage() {
           />
           <Button type="submit">Continue</Button>
         </form>
-        <PrivyButton />
       </div>
     </main>
   );
