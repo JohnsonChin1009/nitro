@@ -79,10 +79,6 @@ export default function ProposalDetailPage() {
   const [isCheckingAllowance, setIsCheckingAllowance] = useState<boolean>(false);
   const [isApproving, setIsApproving] = useState<boolean>(false);
 
-  // State for withdrawal
-  const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
-  const [userStakeAmount, setUserStakeAmount] = useState<string>("0"); // Track user's specific stake
-
   useEffect(() => {
     if (provider && proposalAddress) {
       const provider = new ethers.BrowserProvider(await userWallet.getEthereumProvider());
@@ -96,7 +92,7 @@ export default function ProposalDetailPage() {
   // Calculate force finalize eligibility whenever proposal data or connection status changes
   useEffect(() => {
     if (proposal && userWallet) {
-      const isProposer = userWallet === proposal.proposer.toLowerCase();
+      const isProposer = userWallet.toLowerCase() === proposal.proposer.toLowerCase();
       const isActive = proposal.status === ProposalStatus.Active;
       const totalV = parseFloat(proposal.totalVotes);
       const yesV = parseFloat(proposal.yesVotes);
