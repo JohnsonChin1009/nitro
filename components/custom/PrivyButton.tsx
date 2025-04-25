@@ -20,24 +20,36 @@ export default function PrivyButton() {
   // Redirect to dashboard if user is authenticated and on the homepage
   useEffect(() => {
     if (pathname !== "/") return;
-
+    
     const checkAndRedirect = async () => {
       if (authenticated && user?.wallet?.address) {
-        try {
-          const bloxResponse = await fetch("https://api.blox.my/user/profile", {
-            credentials: "include"  // ask the browser to include blox.my cookies
-          });
-          const bloxData = await bloxResponse.json();
-          console.log("Blox response", bloxData);
-        } catch (error: unknown) {
-          console.error("Error fetching data from Blox", error);
-        }
-        
         localStorage.setItem("walletAddress", user.wallet.address);
+        
+        try {
+          const res = await fetch("/api/checkUserSBT", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ walletAddress: user.wallet.address }),
+          });
+          const { hasToken } = await res.json();
+  
+          // If they don't have the SBT yet, send to sign-up
+          if (!hasToken) {
+            router.replace("/sign-up");
+            return;
+          }
+        } catch (err) {
+          console.error("Failed to check SBT status", err);
+          // Optionally handle the error: show a toast or fallback
+        }
+  
+        // They have the SBT, store and go to dashboard
         router.replace("/dashboard");
       }
     };
-
+  
     checkAndRedirect();
   }, [router, authenticated, user, pathname]);
 

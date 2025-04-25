@@ -65,7 +65,7 @@ contract NitroCreditSBT is ERC721URIStorage, Ownable {
         uint[2] memory a,
         uint[2][2] memory b,
         uint[2] memory c,
-        uint[2] memory input  // assuming public signal is a single element
+        uint[3] memory input
     ) public onlyOwner noExistingToken(to) {
         require(ageVerifier.verifyProof(a, b, c, input), "Invalid ZK proof");
 
