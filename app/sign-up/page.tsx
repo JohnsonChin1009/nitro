@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
+import PrivyButton from "@/components/custom/PrivyButton";
 import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
@@ -71,6 +72,7 @@ export default function SignUpPage() {
             onChange={(e) => setDob(e.target.value)}
           />
           <Button type="submit">Continue</Button>
+          <PrivyButton />
         </form>
       </div>
     </main>

@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
 
         if (hasToken) {
             const tokenId = await contract.getTokenId(walletAddress);
-            localStorage.setItem("tokenID", tokenId);
             return NextResponse.json({ hasToken: true, tokenId: tokenId.toString() });
         } else {
             return NextResponse.json({ hasToken: false, tokenId: null });

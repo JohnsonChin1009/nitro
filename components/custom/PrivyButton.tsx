@@ -14,6 +14,7 @@ export default function PrivyButton() {
   const handleLogout = async () => {
     await logout();
     localStorage.removeItem("walletAddress");
+    localStorage.removeItem("tokenId");
     router.refresh();
   };
 
@@ -33,12 +34,14 @@ export default function PrivyButton() {
             },
             body: JSON.stringify({ walletAddress: user.wallet.address }),
           });
-          const { hasToken } = await res.json();
+          const { hasToken, tokenId } = await res.json();
   
           // If they don't have the SBT yet, send to sign-up
           if (!hasToken) {
             router.replace("/sign-up");
             return;
+          } else {
+            localStorage.setItem("tokenId", tokenId);
           }
         } catch (err) {
           console.error("Failed to check SBT status", err);
