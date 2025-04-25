@@ -7,39 +7,27 @@ const FeatureSection = () => {
   const features = [
     {
       icon: <Zap className="h-6 w-6" />,
-      title: "Lightning Fast",
-      description:
-        "Our optimized platform delivers exceptional performance with minimal latency.",
+      title: "Reputation Scoring",
     },
     {
       icon: <Shield className="h-6 w-6" />,
-      title: "Enterprise Security",
-      description:
-        "Bank-level security with end-to-end encryption and advanced threat protection.",
+      title: "AI-driven  Advisory & Analysis",
     },
     {
       icon: <BarChart className="h-6 w-6" />,
-      title: "Detailed Analytics",
-      description:
-        "Gain valuable insights with comprehensive data visualization tools.",
+      title: "Gamification & Education",
     },
     {
         icon: <Zap className="h-6 w-6" />,
-        title: "Lightning Fast",
-        description:
-          "Our optimized platform delivers exceptional performance with minimal latency.",
+        title: "Incentive-based Stake Pooling",
       },
       {
         icon: <Shield className="h-6 w-6" />,
-        title: "Enterprise Security",
-        description:
-          "Bank-level security with end-to-end encryption and advanced threat protection.",
+        title: "DAO Voting & Community",
       },
       {
         icon: <BarChart className="h-6 w-6" />,
-        title: "Detailed Analytics",
-        description:
-          "Gain valuable insights with comprehensive data visualization tools.",
+        title: "AI Assistant in Interest Rate Decision & Risk Scoring",
       },
   ];
   return (
@@ -62,7 +50,6 @@ const FeatureSection = () => {
               key={index}
               icon={feature.icon}
               title={feature.title}
-              description={feature.description}
               index={index}
             />
           ))}
