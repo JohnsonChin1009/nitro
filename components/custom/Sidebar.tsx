@@ -5,39 +5,36 @@ import { LayoutDashboard, UserRound, WavesLadder, Landmark, PanelLeftClose } fro
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState, useEffect } from "react";
 
 interface SidebarProps {
-    role: string;
     isOpen: boolean;
     setIsOpen?: (isOpen: boolean) => void;
     selectedTab: string;
     setSelectedTab: (tab: string) => void;
 }
 
-export default function Sidebar({role, isOpen, setIsOpen, selectedTab, setSelectedTab}: SidebarProps) {
+export default function Sidebar({isOpen, setIsOpen, selectedTab, setSelectedTab}: SidebarProps) {
+    const [walletAddress, setWalletAddress] = useState<string | null>(null);
     const toggleSidebar = () => {
         if (setIsOpen) {
           setIsOpen(!isOpen);
         }
       };
 
-    const walletAddress = localStorage.getItem("walletAddress");
-    // Sidebar Layouts
-    const stakerTabs = [
+      useEffect(() => {
+          if (typeof window !== "undefined") {
+              const storedAddress = localStorage.getItem("walletAddress");
+              setWalletAddress(storedAddress);
+          }
+      }, []);
+    // Sidebar Layout
+    const tabs = [
         { key: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
         { key: "pools", icon: WavesLadder, label: "Pools" },
         { key: "profile", icon: UserRound, label: "Profile"},
         { key: "governance", icon: Landmark, label: "Governance" }
     ]
-
-    const borrowerTabs = [
-        { key: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
-        { key: "pools", icon: WavesLadder, label: "Pools" },
-        { key: "profile", icon: UserRound, label: "Profile"},
-        { key: "governance", icon: Landmark, label: "Governance" }
-    ]
-
-    const tabs = role === "staker" ? stakerTabs : borrowerTabs;
 
     return (
         <>  {/* Sidebar Wrapper */}

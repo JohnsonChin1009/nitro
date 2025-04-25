@@ -6,13 +6,11 @@ import PoolSection from "@/components/custom/PoolSection";
 import ProfileSection from "@/components/custom/ProfileSection";
 
 interface MainSectionProps {
-  role: string;
   selectedTab: string;
 }
 
-export default function MainSection({ role, selectedTab }: MainSectionProps) {
+export default function MainSection({ selectedTab }: MainSectionProps) {
   const [currentTab, setCurrentTab] = useState(selectedTab);
-  console.log("role selected", role);
   
   useEffect(() => {
     setCurrentTab(selectedTab);

@@ -5,20 +5,19 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
 interface HeaderProps {
-    role: string;
     selectedTab: string;
     sidebarOpen?: boolean;
     toggleSidebar?: () => void;
 }
 
-export default function Header({role, selectedTab, sidebarOpen, toggleSidebar}: HeaderProps) {
+export default function Header({selectedTab, sidebarOpen, toggleSidebar}: HeaderProps) {
     const [currentTab, setCurrentTab] = useState(selectedTab);
 
     useEffect(() => {
       setCurrentTab(selectedTab.toUpperCase());
     }, [selectedTab]);
 
-    const rightArea = role === "staker" ? <StakerRightArea /> : <BorrowerRightArea />;
+    const rightArea = <RightArea />
 
     return (
         <header className="sticky border-b bg-background w-full">
@@ -40,7 +39,7 @@ export default function Header({role, selectedTab, sidebarOpen, toggleSidebar}: 
     )
 }
 
-const StakerRightArea = () => {
+const RightArea = () => {
     return (
         <>
             <Button className="font-bold">
@@ -48,13 +47,5 @@ const StakerRightArea = () => {
                 <BadgePlus className="w-8 h-8" />
             </Button>
         </>
-    )
-}
-
-const BorrowerRightArea = () => {
-    return (
-        <div>
-
-        </div>
     )
 }
