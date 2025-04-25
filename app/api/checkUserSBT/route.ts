@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import NitroCreditSBT from "@/hardhat/artifacts/contracts/NitroCreditSBT.sol/NitroCreditSBT.json"
+import NitroCreditSBT from "@/contract-artifacts/NitroCreditSBT.json"
 import { ethers } from "ethers";
 
 export async function POST(request: NextRequest) {

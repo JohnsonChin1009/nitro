@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
-import NitroCreditSBT from "@/hardhat/artifacts/contracts/NitroCreditSBT.sol/NitroCreditSBT.json";
+import NitroCreditSBT from "@/contract-artifacts/NitroCreditSBT.json";
 import * as snarkjs from "snarkjs";
 import { ethers } from "ethers";
 import fs from "fs";
