@@ -3,11 +3,14 @@
 import { useState } from "react";
 import PrivyButton from "@/components/custom/PrivyButton";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,11 +34,22 @@ export default function SignUpPage() {
         throw new Error(data.error || "Failed to mint SBT");
       }
   
-      console.log("Minting success:", data);
-      // Optionally redirect or notify user here
+      toast("SBT Minted Successfully!", {
+        description: "tx: " + data.transactionHash,
+        action: {
+          label: "View",
+          onClick: () => {
+            window.open(`https://sepolia.scrollscan.com/address/${data.transactionHash}`, "_blank");
+          }
+        }
+      })
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
+      
     } catch (error) {
-      console.error("Minting error:", error);
-      // Optionally show an error toast or message
+      toast.error("Minting error: " + (error as Error).message);
     }
   };
   
