@@ -21,6 +21,7 @@ export default function Sidebar({role, isOpen, setIsOpen, selectedTab, setSelect
         }
       };
 
+    const walletAddress = localStorage.getItem("walletAddress");
     // Sidebar Layouts
     const stakerTabs = [
         { key: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -59,7 +60,7 @@ export default function Sidebar({role, isOpen, setIsOpen, selectedTab, setSelect
                         {isOpen && (
                             <div>
                                 <h2 className="font-semibold text-sm truncate max-w-28">
-                                    Johnson
+                                    {walletAddress}
                                 </h2>
                             </div>
                             )}

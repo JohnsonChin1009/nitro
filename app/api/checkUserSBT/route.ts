@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 
 export async function POST(request: NextRequest) {
     const { walletAddress } = await request.json();
-    const NITRO_SBT_ADDRESS = "0xDe05Bfac9b711D4C24651a20016102D155F700ed";
+    const NITRO_SBT_ADDRESS = "0xd7121344156D594Eb875213d0bdBf2BA24117944";
     const SCROLL_RPC_URL = "https://sepolia-rpc.scroll.io/"
 
     if (!walletAddress) {
@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
 
         if (hasToken) {
             const tokenId = await contract.getTokenId(walletAddress);
+            localStorage.setItem("tokenID", tokenId);
             return NextResponse.json({ hasToken: true, tokenId: tokenId.toString() });
         } else {
             return NextResponse.json({ hasToken: false, tokenId: null });
