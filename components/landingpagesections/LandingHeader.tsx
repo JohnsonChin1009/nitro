@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button } from '../ui/button'
 import Image from 'next/image'
+import PrivyButton from '../custom/PrivyButton'
 
 const LandingHeader = () => {
   return (
@@ -11,7 +11,7 @@ const LandingHeader = () => {
           <span className="text-xl font-bold">Nitro</span>
         </div>
         <div className="flex gap-x-4">
-            <Button>Connect Wallet</Button>
+            <PrivyButton/>
         </div>
       </div>
     </header>

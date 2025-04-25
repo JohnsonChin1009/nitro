@@ -15,9 +15,6 @@ export default function LandingPage() {
       <LandingHeader/>
       {/* Hero Section */}
       <Hero/>
-      <section>
-        <PrivyButton />
-      </section>
       { /* What is Nitro? */}
       <AboutSection/>
       {/* Features of Nitro */}
