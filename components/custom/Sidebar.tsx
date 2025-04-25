@@ -1,7 +1,7 @@
 "use client";
 
 import PrivyButton from "@/components/custom/PrivyButton";
-import { LayoutDashboard, UserRound, WavesLadder, Landmark, PanelLeftClose } from "lucide-react";
+import { LayoutDashboard, UserRound, WavesLadder, Landmark, PanelLeftClose, ClipboardPen } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -27,7 +27,8 @@ export default function Sidebar({isOpen, setIsOpen, selectedTab, setSelectedTab}
         { key: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
         { key: "pools", icon: WavesLadder, label: "Pools" },
         { key: "profile", icon: UserRound, label: "Profile"},
-        { key: "governance", icon: Landmark, label: "Governance" }
+        { key: "governance", icon: Landmark, label: "Governance" },
+        { key: "review", icon: ClipboardPen, label: "Review" }
     ]
 
     return (

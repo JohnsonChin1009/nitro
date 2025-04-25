@@ -5,6 +5,7 @@ import DashboardSection from "@/components/custom/DashboardSection";
 import PoolSection from "@/components/custom/PoolSection";
 import ProfileSection from "@/components/custom/ProfileSection";
 import GovernanceSection from "@/components/custom/GovernanceSection";
+import ReviewSection from "@/components/custom/ReviewSection";
 
 interface MainSectionProps {
   selectedTab: string;
@@ -27,6 +28,8 @@ export default function MainSection({ selectedTab }: MainSectionProps) {
         return <ProfileSection />;
       case "governance":
         return <GovernanceSection />;
+      case "review":
+        return <ReviewSection />;
       default:
         return <div>No Tab Was Selected</div>;
     }

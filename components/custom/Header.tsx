@@ -1,6 +1,6 @@
 "use client"
 
-import { PanelRightClose, BadgePlus } from "lucide-react";
+import { PanelRightClose } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
@@ -17,8 +17,6 @@ export default function Header({selectedTab, sidebarOpen, toggleSidebar}: Header
       setCurrentTab(selectedTab.toUpperCase());
     }, [selectedTab]);
 
-    const rightArea = <RightArea />
-
     return (
         <header className="sticky border-b bg-background w-full">
             <div className="flex items-center justify-between p-6 min-h-20">
@@ -31,21 +29,7 @@ export default function Header({selectedTab, sidebarOpen, toggleSidebar}: Header
                 )}
                 <h1 className="text-xl font-black">{currentTab}</h1>
             </div>
-            <div className="flex items-center gap-3">
-                {rightArea}
-            </div>
             </div>
         </header>
-    )
-}
-
-const RightArea = () => {
-    return (
-        <>
-            <Button className="font-bold">
-                Stake
-                <BadgePlus className="w-8 h-8" />
-            </Button>
-        </>
     )
 }

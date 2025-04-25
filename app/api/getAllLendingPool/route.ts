@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { ethers } from "ethers";
 import DAOImplementation from "@/contract-artifacts/DAOImplementation.json";
-
+import { DAOImplementation_ContractAddress } from "@/lib/contractAddress";
 export async function GET() {
     try {
-        const contractAddress = "0x5Ba22678615fbf377638C2e44e00ee70b40f82E5";
+        const contractAddress = DAOImplementation_ContractAddress;
         const contractABI = DAOImplementation;
         const provider = new ethers.JsonRpcProvider("https://sepolia-rpc.scroll.io/");
         const contract = new ethers.Contract(contractAddress, contractABI, provider);

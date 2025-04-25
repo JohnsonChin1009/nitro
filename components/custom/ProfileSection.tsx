@@ -41,10 +41,12 @@ export default function ProfileSection() {
           {/* Profile Card */}
           <div className="bg-white dark:bg-zinc-900 shadow-xl rounded-2xl p-6">
             <div className="flex items-center space-x-4">
-              <img
+              <Image
                 src={user?.avatar_url || "/default-avatar.png"}
                 alt="User Avatar"
                 className="w-16 h-16 rounded-full object-cover border"
+                width={500}
+                height={500}
               />
               <h2 className="text-2xl font-semibold">
                 {user?.username || "Anonymous"}

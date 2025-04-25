@@ -3,9 +3,8 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { useParams } from 'next/navigation';
 import { ethers } from 'ethers';
-import LendingPoolABI from '../../abis/LendingPool.json'; // Adjusted path
-import MYRCABI from '@/';
-
+import LendingPoolABI from '@/contract-artifacts/LendingPool.json'; // Adjusted path
+import USDC_ContractAddress from "@/contract-artifacts/MockUSDC.json"
 interface PoolInfo {
   [index: number]: string | ethers.BigNumber | boolean; // Array indices
   _name: string;
@@ -303,7 +302,7 @@ export default function LendingPoolPage() {
                  setContract(poolContract);
              }
              setError(null); // Clear previous errors on successful connect
-         } catch (err: any) {
+         } catch (err: unknown) {
               console.error('Failed to connect wallet:', err);
               setError(`Failed to connect wallet: ${err.message}`);
          }
@@ -363,7 +362,7 @@ export default function LendingPoolPage() {
   const formatBigInt = (value: ethers.BigNumber | undefined): string => {
      if (value === undefined) return 'N/A';
      try {
-         return ethers.utils.formatUnits(value, tokenDecimals);
+         return ethers.formatUnits(value, tokenDecimals);
      } catch (e) {
          console.error("Error formatting BigInt:", e);
          return value.toString(); // Fallback to raw string
@@ -407,29 +406,26 @@ export default function LendingPoolPage() {
     
     try {
       // Convert amount to wei using the token's decimals
-      const amountInWei = ethers.utils.parseUnits(borrowAmount, tokenDecimals);
+      const amountInWei = ethers.parseUnits(borrowAmount, tokenDecimals);
       
       // Calculate the 5% stake required by the contract
       const requiredStakeInWei = amountInWei.mul(5).div(100);
       
-      console.log(`Borrowing ${borrowAmount} ${tokenSymbol} with required stake of ${ethers.utils.formatUnits(requiredStakeInWei, tokenDecimals)} ${tokenSymbol}`);
+      console.log(`Borrowing ${borrowAmount} ${tokenSymbol} with required stake of ${ethers.formatUnits(requiredStakeInWei, tokenDecimals)} ${tokenSymbol}`);
       
       // First approve the token transfer for the 5% stake
       setIsApproving(true);
+
       const tokenContract = new ethers.Contract(
         poolInfo?._tokenAddress || '',
-        [
-          "function approve(address spender, uint256 amount) external returns (bool)",
-          "function allowance(address owner, address spender) external view returns (uint256)",
-          "function balanceOf(address account) external view returns (uint256)"
-        ],
+        USDC_ContractAddress,
         signer
-      );
-      
+      )
+
       // Check if user has enough tokens for the stake
       const userBalance = await tokenContract.balanceOf(userAddress);
       if (userBalance.lt(requiredStakeInWei)) {
-        setBorrowError(`Insufficient balance for the required 5% stake. You need ${ethers.utils.formatUnits(requiredStakeInWei, tokenDecimals)} ${tokenSymbol}.`);
+        setBorrowError(`Insufficient balance for the required 5% stake. You need ${ethers.formatUnits(requiredStakeInWei, tokenDecimals)} ${tokenSymbol}.`);
         setIsBorrowing(false);
         setIsApproving(false);
         return;
